@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptArchitect | Refina tus Prompts</title>
+    <meta name="description"
+        content="Optimiza tus instrucciones para IA con PromptArchitect. Herramienta minimalista y profesional para ChatGPT, Claude y Gemini.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glow-violet {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+        }
+
+        .glow-violet:focus-within {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.25);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .accent-text {
+            color: #8B5CF6;
+        }
+
+        .accent-bg {
+            background-color: #8B5CF6;
+        }
+
+        .hover-glow:hover {
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-active {
+            border-color: #8B5CF6;
+            background: rgba(139, 92, 246, 0.1);
+            color: #8B5CF6;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass border-b border-white/5 px-6 py-4">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="text-violet-500">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <span class="text-xl font-bold tracking-tight">Prompt<span class="accent-text">Architect</span></span>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="flex items-center gap-2 text-sm font-medium">
+                <button onclick="setLanguage('es')" id="btn-es"
+                    class="px-2 py-1 rounded transition-colors hover:text-violet-400">ES</button>
+                <span class="text-white/20">|</span>
+                <button onclick="setLanguage('en')" id="btn-en"
+                    class="px-2 py-1 rounded transition-colors hover:text-violet-400">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-6 py-12 space-y-8">
+        <header class="text-center space-y-4 fade-in">
+            <h1 id="hero-title" class="text-4xl md:text-5xl font-extrabold tracking-tight">Refina tus ideas en <br><span
+                    class="accent-text italic">Prompts Maestros</span>.</h1>
+            <p id="hero-subtitle" class="text-white/50 text-lg max-w-xl mx-auto">Diseñado para la claridad. Construido
+                para la precisión. Optimización de prompts local y privada.</p>
+        </header>
+
+        <!-- Tool Section -->
+        <section class="space-y-6 fade-in" style="animation-delay: 0.1s;">
+            <!-- Input Area -->
+            <div class="relative group">
+                <div id="input-label"
+                    class="absolute -top-3 left-4 px-2 bg-black text-xs font-semibold text-violet-400 uppercase tracking-widest z-10">
+                    Entrada del Prompt</div>
+                <textarea id="prompt-input"
+                    class="w-full h-48 bg-white/5 border border-white/10 rounded-2xl p-6 outline-none transition-all duration-300 focus:ring-1 focus:ring-violet-500/50 glow-violet resize-none text-base leading-relaxed"
+                    placeholder="Escribe tu prompt base aquí..."></textarea>
+                <div id="error-msg"
+                    class="absolute right-4 bottom-4 text-xs text-red-400 opacity-0 transition-opacity pointer-events-none">
+                    Por favor introduce texto</div>
+            </div>
+
+            <!-- Toolbar / Modes -->
+            <div class="space-y-3">
+                <label id="mode-label"
+                    class="block text-xs font-semibold text-white/40 uppercase tracking-widest ml-1">Modo de
+                    Refinado</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button onclick="selectMode('academic', this)"
+                        class="mode-btn glass py-3 rounded-xl text-sm font-medium border border-white/10 transition-all hover:bg-white/5 flex flex-col items-center gap-1 tab-active"
+                        data-lang-key="mode-academic">
+                        <span>🎓 Académico</span>
+                    </button>
+                    <button onclick="selectMode('creative', this)"
+                        class="mode-btn glass py-3 rounded-xl text-sm font-medium border border-white/10 transition-all hover:bg-white/5 flex flex-col items-center gap-1"
+                        data-lang-key="mode-creative">
+                        <span>💡 Creativo</span>
+                    </button>
+                    <button onclick="selectMode('technical', this)"
+                        class="mode-btn glass py-3 rounded-xl text-sm font-medium border border-white/10 transition-all hover:bg-white/5 flex flex-col items-center gap-1"
+                        data-lang-key="mode-technical">
+                        <span>⚙️ Técnico</span>
+                    </button>
+                    <button onclick="selectMode('expert', this)"
+                        class="mode-btn glass py-3 rounded-xl text-sm font-medium border border-white/10 transition-all hover:bg-white/5 flex flex-col items-center gap-1"
+                        data-lang-key="mode-expert">
+                        <span>🧠 Experto</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <button onclick="optimize()" id="optimize-btn"
+                class="w-full accent-bg hover:opacity-90 active:scale-[0.98] py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover-glow">
+                Optimizar Prompt
+            </button>
+
+            <!-- Output Area -->
+            <div id="output-container" class="space-y-4 opacity-0 transition-all duration-500 transform translate-y-4">
+                <div class="flex justify-between items-center px-1">
+                    <span id="output-label"
+                        class="text-xs font-semibold text-white/40 uppercase tracking-widest">Resultado Refinado</span>
+                    <button onclick="copyToClipboard()" id="copy-btn"
+                        class="text-xs font-bold text-violet-400 hover:text-violet-300 flex items-center gap-1 transition-colors">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span id="copy-text">Copiar</span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <div id="prompt-output"
+                        class="w-full bg-violet-500/5 border border-violet-500/20 rounded-2xl p-6 text-white/90 text-base leading-relaxed break-words whitespace-pre-wrap italic">
+                        <!-- El resultado aparecerá aquí -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="px-6 py-8 text-center text-white/20 text-xs tracking-widest uppercase">
+        <p>© 2026 PromptArchitect — Privacy First Prompt Engineering</p>
+    </footer>
+
+    <script>
+        const i18n = {
+            es: {
+                title: "PromptArchitect | Refina tus Prompts",
+                heroTitle: 'Refina tus ideas en <br><span class="accent-text italic">Prompts Maestros</span>.',
+                heroSubtitle: "Diseñado para la claridad. Construido para la precisión. Optimización de prompts local y privada.",
+                inputLabel: "Entrada del Prompt",
+                inputPlaceholder: "Escribe tu prompt base aquí...",
+                modeLabel: "Modo de Refinado",
+                modeAcademic: "🎓 Académico",
+                modeCreative: "💡 Creativo",
+                modeTechnical: "⚙️ Técnico",
+                modeExpert: "🧠 Experto",
+                optimizeBtn: "Optimizar Prompt",
+                outputLabel: "Resultado Refinado",
+                copy: "Copiar",
+                copied: "¡Copiado!",
+                emptyError: "Por favor introduce texto"
+            },
+            en: {
+                title: "PromptArchitect | Refine your Prompts",
+                heroTitle: 'Refine your ideas into <br><span class="accent-text italic">Master Prompts</span>.',
+                heroSubtitle: "Designed for clarity. Built for precision. Local and private prompt optimization.",
+                inputLabel: "Prompt Input",
+                inputPlaceholder: "Write your base prompt here...",
+                modeLabel: "Refining Mode",
+                modeAcademic: "🎓 Academic",
+                modeCreative: "💡 Creative",
+                modeTechnical: "⚙️ Technical",
+                modeExpert: "🧠 Expert",
+                optimizeBtn: "Optimize Prompt",
+                outputLabel: "Refined Result",
+                copy: "Copy",
+                copied: "Copied!",
+                emptyError: "Please enter some text"
+            }
+        };
+
+        const templates = {
+            academic: {
+                es: (t) => `Actúa como un experto profesor universitario. Analiza el siguiente tema con rigor, utiliza terminología técnica adecuada y estructura la respuesta de forma lógica y densificada. Proporciona referencias teóricas si es posible.\n\nTema: ${t}`,
+                en: (t) => `Act as an expert university professor. Analyze the following topic with rigor, use appropriate technical terminology, and structure the response logically and densely. Provide theoretical references if possible.\n\nTopic: ${t}`
+            },
+            creative: {
+                es: (t) => `Actúa como un director creativo innovador. Toma la siguiente idea y expándela con analogías vívidas, un tono inspirador y soluciones fuera de lo común. Evita los clichés.\n\nIdea: ${t}`,
+                en: (t) => `Act as an innovative creative director. Take the following idea and expand it with vivid analogies, an inspiring tone, and out-of-the-box solutions. Avoid clichés.\n\nIdea: ${t}`
+            },
+            technical: {
+                es: (t) => `Actúa como un Ingeniero Senior de Software. Explica paso a paso o resuelve el siguiente problema enfocándote en la eficiencia, escalabilidad y mejores prácticas. Incluye pseudocódigo o estructura de datos si aplica.\n\nProblema: ${t}`,
+                en: (t) => `Act as a Senior Software Engineer. Explain step-by-step or solve the following problem focusing on efficiency, scalability, and best practices. Include pseudocode or data structure if applicable.\n\nProblem: ${t}`
+            },
+            expert: {
+                es: (t) => `Actúa como un Consultor Estratégico de élite. Evalúa el siguiente contexto, identifica riesgos críticos y propón un plan de acción ejecutivo detallado en una tabla o lista priorizada.\n\nContexto: ${t}`,
+                en: (t) => `Act as an elite Strategic Consultant. Evaluate the following context, identify critical risks, and propose detailed executive action plans in a table or prioritized list.\n\nContext: ${t}`
+            }
+        };
+
+        let currentLang = 'es';
+        let currentMode = 'academic';
+
+        // Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('pa-lang');
+            const browserLang = navigator.language.split('-')[0];
+
+            if (savedLang) {
+                setLanguage(savedLang);
+            } else if (browserLang === 'en') {
+                setLanguage('en');
+            } else {
+                setLanguage('es');
+            }
+        });
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('pa-lang', lang);
+
+            // UI Updates
+            document.title = i18n[lang].title;
+            document.getElementById('hero-title').innerHTML = i18n[lang].heroTitle;
+            document.getElementById('hero-subtitle').innerText = i18n[lang].heroSubtitle;
+            document.getElementById('input-label').innerText = i18n[lang].inputLabel;
+            document.getElementById('prompt-input').placeholder = i18n[lang].inputPlaceholder;
+            document.getElementById('mode-label').innerText = i18n[lang].modeLabel;
+            document.getElementById('optimize-btn').innerText = i18n[lang].optimizeBtn;
+            document.getElementById('output-label').innerText = i18n[lang].outputLabel;
+            document.getElementById('copy-text').innerText = i18n[lang].copy;
+            document.getElementById('error-msg').innerText = i18n[lang].emptyError;
+
+            // Buttons translation
+            const btns = document.querySelectorAll('.mode-btn');
+            btns[0].querySelector('span').innerText = i18n[lang].modeAcademic;
+            btns[1].querySelector('span').innerText = i18n[lang].modeCreative;
+            btns[2].querySelector('span').innerText = i18n[lang].modeTechnical;
+            btns[3].querySelector('span').innerText = i18n[lang].modeExpert;
+
+            // Lang switcher active state
+            document.getElementById('btn-es').style.color = lang === 'es' ? '#8B5CF6' : '';
+            document.getElementById('btn-en').style.color = lang === 'en' ? '#8B5CF6' : '';
+        }
+
+        function selectMode(mode, element) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('tab-active'));
+            element.classList.add('tab-active');
+        }
+
+        function optimize() {
+            const input = document.getElementById('prompt-input');
+            const outputText = document.getElementById('prompt-output');
+            const outputContainer = document.getElementById('output-container');
+            const errorMsg = document.getElementById('error-msg');
+
+            if (!input.value.trim()) {
+                errorMsg.style.opacity = '1';
+                input.classList.add('border-red-500/50');
+                setTimeout(() => {
+                    errorMsg.style.opacity = '0';
+                    input.classList.remove('border-red-500/50');
+                }, 3000);
+                return;
+            }
+
+            const refined = templates[currentMode][currentLang](input.value.trim());
+            outputText.innerText = refined;
+
+            outputContainer.classList.remove('opacity-0', 'translate-y-4');
+            outputContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        async function copyToClipboard() {
+            const text = document.getElementById('prompt-output').innerText;
+            const btnText = document.getElementById('copy-text');
+
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalText = btnText.innerText;
+                btnText.innerText = i18n[currentLang].copied;
+                setTimeout(() => {
+                    btnText.innerText = originalText;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+            }
+        }
+    </script>
+</body>
+
+</html>
