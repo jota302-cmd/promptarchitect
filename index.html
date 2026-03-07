@@ -168,7 +168,7 @@
     </nav>
 
     <!-- Top Ad Slot -->
-    <div class="ad-slot max-w-full" id="ad-top" data-label="Ads / Anuncio"></div>
+    <div class="ad-slot max-w-full min-h-[90px]" id="ad-top" data-label="Ads / Anuncio"></div>
 
     <!-- Main Content -->
     <main class="flex-grow max-w-4xl mx-auto w-full px-6 py-12 space-y-8">
@@ -253,8 +253,63 @@
         </section>
     </main>
 
+    <!-- About this Tool Section -->
+    <section class="max-w-4xl mx-auto w-full px-6 mb-12 fade-in" style="animation-delay: 0.2s;">
+        <div class="glass rounded-3xl p-8 space-y-8 border border-white/10">
+            <div class="space-y-4">
+                <h2 id="about-title" class="text-2xl font-bold tracking-tight text-[#06B6D4]">Technical Insights: How
+                    PromptArchitect Works</h2>
+                <p id="about-description" class="text-white/70 leading-relaxed text-sm"></p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 id="usage-title" class="text-lg font-semibold text-white/90">Guía de Uso Rápida</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 text-sm text-white/60">
+                            <span
+                                class="flex-shrink-0 w-6 h-6 rounded-full bg-[#06B6D4]/10 text-[#06B6D4] flex items-center justify-center font-bold text-xs ring-1 ring-[#06B6D4]/20">1</span>
+                            <span id="usage-step-1"></span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-white/60">
+                            <span
+                                class="flex-shrink-0 w-6 h-6 rounded-full bg-[#06B6D4]/10 text-[#06B6D4] flex items-center justify-center font-bold text-xs ring-1 ring-[#06B6D4]/20">2</span>
+                            <span id="usage-step-2"></span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-white/60">
+                            <span
+                                class="flex-shrink-0 w-6 h-6 rounded-full bg-[#06B6D4]/10 text-[#06B6D4] flex items-center justify-center font-bold text-xs ring-1 ring-[#06B6D4]/20">3</span>
+                            <span id="usage-step-3"></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 id="security-title" class="text-lg font-semibold text-white/90">Seguridad y Privacidad</h3>
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/5 text-xs text-white/50 leading-relaxed italic"
+                        id="security-note">
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4 border-t border-white/5 pt-8">
+                <h3 class="text-lg font-semibold text-white/90">FAQ</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <p class="text-sm font-medium text-[#06B6D4]" id="faq-q1"></p>
+                        <p class="text-xs text-white/50" id="faq-a1"></p>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-sm font-medium text-[#06B6D4]" id="faq-q2"></p>
+                        <p class="text-xs text-white/50" id="faq-a2"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Bottom Ad Slot -->
-    <div class="ad-slot max-w-full" id="ad-bottom" data-label="Ads / Anuncio"></div>
+    <div class="ad-slot max-w-full min-h-[90px]" id="ad-bottom" data-label="Ads / Anuncio"></div>
 
     <!-- Footer -->
     <footer class="px-6 py-12 text-center text-white/30 text-xs tracking-widest uppercase space-y-6">
@@ -388,7 +443,19 @@
                 termsTitle: "Términos de Servicio",
                 privacyTitle: "Política de Privacidad",
                 termsContent: `<h2>Términos de Servicio</h2><p>Al utilizar PromptArchitect, aceptas nuestros términos. Esta herramienta procesa datos localmente en tu navegador. No almacenamos tus prompts en ningún servidor externo.</p><h3>Uso Aceptable</h3><p>Te comprometes a no utilizar la herramienta para generar contenido malicioso o ilegal.</p>`,
-                privacyContent: `<h2>Política de Privacidad</h2><p>Tu privacidad es nuestra prioridad. OptiMicroTools no recopila, almacena ni comparte los datos que introduces en PromptArchitect.</p><h3>Procesamiento Local</h3><p>Todo el refinamiento de prompts ocurre en el lado del cliente (tu dispositivo).</p>`
+                privacyContent: `<h2>Política de Privacidad</h2><p>Tu privacidad es nuestra prioridad. OptiMicroTools no recopila, almacena ni comparte los datos que introduces en PromptArchitect.</p><h3>Procesamiento Local</h3><p>Todo el refinamiento de prompts ocurre en el lado del cliente (tu dispositivo).</p>`,
+                aboutTitle: "Technical Insights: Cómo Funciona PromptArchitect",
+                aboutDescription: "PromptArchitect es una herramienta avanzada de ingeniería de prompts diseñada para transformar ideas vagas en instrucciones precisas y altamente efectivas para modelos de lenguaje (LLMs). Utiliza una lógica de 'Refinado Multimodal' que aplica plantillas estructurales basadas en el contexto seleccionado (académico, creativo, técnico o experto). A diferencia de otras herramientas, optimizamos la semántica del prompt para maximizar la probabilidad de obtener respuestas coherentes y profundas, reduciendo las alucinaciones de la IA y mejorando significativamente el flujo de trabajo de profesionales y entusiastas.",
+                usageTitle: "Guía de Uso Rápida",
+                usageStep1: "Introduce tu prompt base o idea inicial en el área de texto principal.",
+                usageStep2: "Selecciona el modo de refinado que mejor se adapte a tus necesidades específicas.",
+                usageStep3: "Haz clic en 'Optimizar' para obtener tu prompt maestro listo para copiar y usar.",
+                securityTitle: "Seguridad y Privacidad (Client-Side)",
+                securityNote: "PromptArchitect utiliza Client-Side Processing exclusivo. Esto significa que toda la lógica de refinamiento se ejecuta directamente en tu navegador mediante JavaScript. Sus datos nunca salen de su dispositivo ni se envían a servidores externos para su procesamiento, cumpliendo con los más altos estándares de privacidad técnica.",
+                faqQ1: "¿Cómo mejora esto la respuesta de la IA?",
+                faqA1: "Al estructurar el prompt con roles específicos y directrices de salida claras, la IA asigna más 'atención' a las variables críticas, produciendo resultados más precisos.",
+                faqQ2: "¿Se guardan mis prompts?",
+                faqA2: "No. PromptArchitect no tiene base de datos persistente. Una vez que cierras o recargas la pestaña, toda la sesión se elimina por completo de la memoria volátil del navegador."
             },
             en: {
                 title: "PromptArchitect | Refine your Prompts",
@@ -414,7 +481,19 @@
                 termsTitle: "Terms of Service",
                 privacyTitle: "Privacy Policy",
                 termsContent: `<h2>Terms of Service</h2><p>By using PromptArchitect, you agree to our terms. This tool processes data locally in your browser. We do not store your prompts on any external server.</p><h3>Acceptable Use</h3><p>You agree not to use the tool to generate malicious or illegal content.</p>`,
-                privacyContent: `<h2>Privacy Policy</h2><p>Your privacy is our priority. OptiMicroTools does not collect, store, or share the data you enter into PromptArchitect.</p><h3>Local Processing</h3><p>All prompt refinement occurs on the client-side (your device).</p>`
+                privacyContent: `<h2>Privacy Policy</h2><p>Your privacy is our priority. OptiMicroTools does not collect, store, or share the data you enter into PromptArchitect.</p><h3>Local Processing</h3><p>All prompt refinement occurs on the client-side (your device).</p>`,
+                aboutTitle: "Technical Insights: How PromptArchitect Works",
+                aboutDescription: "PromptArchitect is an advanced prompt engineering tool designed to transform vague ideas into precise and highly effective instructions for Large Language Models (LLMs). It utilizes a 'Multimodal Refinement' logic that applies structural templates based on the selected context (academic, creative, technical, or expert). Unlike other tools, we optimize prompt semantics to maximize the probability of obtaining coherent and insightful responses, reducing AI hallucinations and significantly improving the workflow for professionals and enthusiasts alike.",
+                usageTitle: "Quick Usage Guide",
+                usageStep1: "Enter your base prompt or initial idea in the main text area.",
+                usageStep2: "Select the refinement mode that best fits your specific needs.",
+                usageStep3: "Click 'Optimize' to get your master prompt ready to copy and use.",
+                securityTitle: "Security and Privacy (Client-Side)",
+                securityNote: "PromptArchitect exclusively uses Client-Side Processing. This means that all refinement logic runs directly in your browser via JavaScript. Your data never leaves your device or is sent to external servers for processing, complying with the highest technical privacy standards.",
+                faqQ1: "How does this improve AI responses?",
+                faqA1: "By structuring the prompt with specific roles and clear output guidelines, the AI allocates more 'attention' to critical variables, producing more accurate results.",
+                faqQ2: "Are my prompts stored?",
+                faqA2: "No. PromptArchitect does not have a persistent database. Once you close or reload the tab, the entire session is completely cleared from the browser's volatile memory."
             }
         };
 
@@ -482,6 +561,20 @@
             document.getElementById('contact-title').innerText = t.contactTitle;
             document.getElementById('usdt-label').innerText = t.usdtLabel;
             document.getElementById('usdt-copy-text').innerText = t.copyBtn;
+
+            // Update About Section
+            document.getElementById('about-title').innerText = t.aboutTitle;
+            document.getElementById('about-description').innerText = t.aboutDescription;
+            document.getElementById('usage-title').innerText = t.usageTitle;
+            document.getElementById('usage-step-1').innerText = t.usageStep1;
+            document.getElementById('usage-step-2').innerText = t.usageStep2;
+            document.getElementById('usage-step-3').innerText = t.usageStep3;
+            document.getElementById('security-title').innerText = t.securityTitle;
+            document.getElementById('security-note').innerText = t.securityNote;
+            document.getElementById('faq-q1').innerText = t.faqQ1;
+            document.getElementById('faq-a1').innerText = t.faqA1;
+            document.getElementById('faq-q2').innerText = t.faqQ2;
+            document.getElementById('faq-a2').innerText = t.faqA2;
         }
 
         function selectMode(mode, element) {
